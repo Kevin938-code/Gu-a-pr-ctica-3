@@ -10,8 +10,6 @@ COLORES = {
     "RESET": "\033[0m",
 }
 
-RESPUESTAS = ("si", "sí", "s", "yes", "y", "Si", "SI", "SÍ", "Sí", "YES", "Y")
-
 def borrar_pantalla():
     os.system("cls" if os.name == "nt" else "clear")
 
@@ -35,17 +33,22 @@ def imprimir_error(mensaje):
 def leer_entero(mensaje):
     while True:
         try:
-            return int(input(mensaje))
+            valor = int(input(mensaje))
+            if valor < 0:
+                imprimir_error("El número no puede ser negativo.")
+                continue
+            return valor
         except ValueError:
-            print("  Debe ser un número entero.")
+            imprimir_error("  Debe ser un número entero.")
 
-def es_mayor_de_edad(self):
-        return leer_entero(self.edad >= 18)
+def es_mayor_de_edad(edad):
+    return edad >= 18
 
 def menu(titulo, opciones):
+    imprimir_titulo(titulo)
     for opcion in opciones:
         print(f" {opcion}")
-    return input(f"opción[0...{len(opciones)-1}]:  ").strip().upper()
+    return input(f"\n  Opción [0...{len(opciones)-1}]:  ").strip().upper()
 
 if __name__ == "__main__":
     opc = menu("Menú principal", ["1) Pila", "2) Cola", "0) salir"])

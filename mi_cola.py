@@ -20,13 +20,18 @@ class MiCola:
         if self.cantidad == self.capacidad:
             imprimir_error("  ⚠ La cola está llena")
             return False
+
+        if self.buscar(pasajero.numero) != 1:
+            imprimir_error(f"El número de pasajero {pasajero.numero} ya existe en la cola")
+            return False
+
         self.datos[self.cantidad] = pasajero          # se pone a la fila por detrás
         self.cantidad = self.cantidad + 1
         return True
 
     def listar(self):                                 # ✅ EJEMPLO: del FRENTE al FINAL
         if self.cantidad == 0:
-            print("  (cola vacía)")
+            imprimir_error("  (cola vacía)")
             return
         for i in range(self.cantidad):                # 0, 1, ..., cantidad-1  (hacia adelante)
             if i == 0:
@@ -44,9 +49,9 @@ class MiCola:
         valor = self.datos[0]
         for i in range(self.cantidad -1):
             self.datos[i] = self.datos[i+1]
-            self.datos[self.cantidad -1] = None
-            self.cantidad = self.cantidad - 1
-            return valor
+        self.datos[self.cantidad -1] = None
+        self.cantidad = self.cantidad - 1
+        return valor
 
     def ver_frente(self):
         if self.cantidad == 0:
@@ -94,7 +99,7 @@ class MiCola:
 
     def esta_vacia(self):
         if self.cantidad == 0:
-            print("lista vacía")
+            print("Lista vacía")
             return True
         return False
 
@@ -113,18 +118,14 @@ class MiCola:
         izq = 0
         der = self.cantidad -1
         while izq <= der:
-            medio = (izq + der)//2
+            medio = (izq + der) // 2
             if self.datos[medio].numero == numero:
                 return medio
             if self.datos[medio].numero < numero:
                 izq = medio + 1
             else:
                 der = medio - 1 
-            return - 1
-
-    def burbuja(self):
-        pass
-
+        return - 1
 
 
 if __name__ == "__main__":
@@ -134,3 +135,25 @@ if __name__ == "__main__":
     cola.encolar(Pasajero("Luis",  "0987654321", 35))
     print(cola.buscar("0987654321"))   # debe imprimir 2
     cola.listar()
+    
+    tope = cola.ver_tope()
+    print(f"Tope actual: {tope}")
+        
+    pos_1 = cola.buscar(1002)
+    print(f"Buscar 1002 (Ana) -> Posición: {pos_1}")
+    pos_2 = cola.buscar(9999)
+    print(f"Buscar 9999 (No existe) -> Posición: {pos_2}")
+    
+    cola.modificar(1002, "Esmeraldas", "04C")
+    cola.listar()
+    
+    eliminado = cola.eliminar_por_numero(1001)
+    print(f"Se eliminó a: {eliminado.nombre if eliminado else 'Nadie'}")
+    cola.listar()
+    
+    cola_copia = cola.copiar()
+    print("Listando la cola COPIA:")
+    cola_copia.listar()
+    
+    print(f"Longitud de la cola: {cola.longitud()}")
+    cola.esta_vacia()
