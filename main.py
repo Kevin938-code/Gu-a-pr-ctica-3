@@ -1,6 +1,5 @@
 from herramientas import (
     borrar_pantalla,
-    es_mayor_de_edad,
     imprimir_error,
     imprimir_exito,
     imprimir_titulo,
@@ -70,6 +69,7 @@ def menu_pila():
         
         elif op == "2":
             borrar_pantalla()
+            imprimir_titulo("LISTADO DE LA PILA")
             pila.listar()
             pausa()
         
@@ -77,6 +77,7 @@ def menu_pila():
         
         elif op == "3":
             borrar_pantalla()
+            imprimir_titulo("DESAPILAR PASAJERO")
             salido = pila.desapilar()
             if salido:
                 tope_actual = pila.ver_tope()
@@ -88,6 +89,7 @@ def menu_pila():
     
         elif op == "4":
             borrar_pantalla()
+            imprimir_titulo("VER TOPE DE LA PILA")
             tope = pila.ver_tope()
             if tope:
                 imprimir_exito(f"Tope actual: {tope}")
@@ -97,6 +99,7 @@ def menu_pila():
 
         elif op == "5":
             borrar_pantalla()
+            imprimir_titulo("BUSCAR PASAJERO EN PILA")
             num = leer_entero("  Número de pasajero a buscar: ")
             pos = pila.buscar(num)
             if pos != -1:
@@ -107,6 +110,7 @@ def menu_pila():
         
         elif op == "6":
             borrar_pantalla()
+            imprimir_titulo("MODIFICAR PASAJERO")
             num = leer_entero("  Número de pasajero a modificar: ")
             nuevo_destino = input(" Nuevo destino: ").strip()
             nuevo_asiento = input(" Nuevo asiento: ").strip().upper()
@@ -118,6 +122,7 @@ def menu_pila():
         
         elif op == "7":
             borrar_pantalla()
+            imprimir_titulo("ELIMINAR PASAJERO POR NÚMERO")
             num = leer_entero("  Número de pasajero a eliminar: ")
             eliminado = pila.eliminar_por_numero(num)
             if eliminado:
@@ -128,6 +133,7 @@ def menu_pila():
 
         elif op == "8":
             borrar_pantalla()
+            imprimir_titulo("COPIA DE LA PILA")
             pila_copia = pila.copiar()
             imprimir_exito("Copia de la pila creada con éxito. Listando copia:")
             pila_copia.listar()
@@ -135,11 +141,13 @@ def menu_pila():
 
         elif op == "9":
             borrar_pantalla()
+            imprimir_titulo("LONGITUD DE LA PILA")
             print(f"  Longitud de la pila: {pila.longitud()}")
             pausa()
             
         elif op == "10":
             borrar_pantalla()    
+            imprimir_titulo("ESTADO DE LA PILA")
             if pila.esta_vacia():
                 imprimir_error("La pila está vacía")
             else:
@@ -148,6 +156,7 @@ def menu_pila():
         
         elif op == "C":
             borrar_pantalla()
+            imprimir_titulo("CARGAR DATOS DE PRUEBA")
             for p in datos_prueba():
                 pila.apilar(p)
             imprimir_exito("Datos de prueba apilados")
